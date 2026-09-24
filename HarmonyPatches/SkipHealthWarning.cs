@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace GottaGoFast.HarmonyPatches
 {
-    [HarmonyPatch(typeof(HealthWarningViewController), nameof(HealthWarningViewController.Init))]
+    [HarmonyPatch(typeof(HealthWarningViewController), "DidActivate")]
     static class SkipHealthWarning
     {
         static void Postfix(HealthWarningViewController __instance)
