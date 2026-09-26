@@ -15,7 +15,7 @@ namespace GottaGoFast.HarmonyPatches {
 			if(!canTriggerGarbageCollector || !Configuration.PluginConfig.Instance.EnableOptimizations)
 				return;
 
-			if(gcSkipCounter++ % Configuration.PluginConfig.Instance.GcSkips != 0)
+			if(gcSkipCounter++ % Math.Max(1, Configuration.PluginConfig.Instance.GcSkips) != 0)
 				canTriggerGarbageCollector = false;
 		}
 

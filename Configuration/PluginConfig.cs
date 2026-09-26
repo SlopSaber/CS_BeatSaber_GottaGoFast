@@ -27,7 +27,9 @@ namespace GottaGoFast.Configuration {
 		/// </summary>
 		public virtual void Changed() {
 			// Do stuff when the config is changed.
-			if(GcSkips > 20)
+			if(GcSkips < 1)
+				GcSkips = 1;
+			else if(GcSkips > 20)
 				GcSkips = 20;
 		}
 

@@ -21,26 +21,21 @@ namespace GottaGoFast {
 			static readonly bool hasBsml = IPA.Loader.PluginManager.GetPluginFromId("BeatSaberMarkupLanguage") != null;
 
 			public static void SetupUI() {
-				void wrap() => BeatSaberMarkupLanguage.Util.MainMenuAwaiter.MainMenuInitializing += delegate {
-					EnableUI();
-				};
-
 				if(hasBsml)
-					wrap();
+					BeatSaberMarkupLanguage.Util.MainMenuAwaiter.MainMenuInitializing += EnableUI;
 			}
 
-			public static void EnableUI() {
-				void wrap() => BSMLSettings.Instance.AddSettingsMenu("Gotta Go Fast", "GottaGoFast.Views.settings.bsml", Configuration.PluginConfig.Instance);
-
-				if(hasBsml)
-					wrap();
+			static void EnableUI() {
+				BSMLSettings.Instance.AddSettingsMenu("Gotta Go Fast", "GottaGoFast.Views.settings.bsml", Configuration.PluginConfig.Instance);
 			}
 
 			public static void DisableUI() {
-				void wrap() => BSMLSettings.Instance.RemoveSettingsMenu(Configuration.PluginConfig.Instance);
+				if(!hasBsml)
+					return;
 
-				if(hasBsml)
-					wrap();
+				BeatSaberMarkupLanguage.Util.MainMenuAwaiter.MainMenuInitializing -= EnableUI;
+				if(BSMLSettings.Instance != null)
+					BSMLSettings.Instance.RemoveSettingsMenu(Configuration.PluginConfig.Instance);
 			}
 		}
 
